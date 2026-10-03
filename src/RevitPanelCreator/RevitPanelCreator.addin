@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Application">
+    <Name>Revit Panel Creator</Name>
+    <Assembly>C:\RevitAddins\RevitPanelCreator\RevitPanelCreator.dll</Assembly>
+    <AddInId>9A2E601B-31D9-4897-BC18-8E8B2AEF6284</AddInId>
+    <FullClassName>RevitPanelCreator.RevitPanelCreatorApp</FullClassName>
+    <VendorId>RPG</VendorId>
+    <VendorDescription>Revit Panel Creator</VendorDescription>
+  </AddIn>
+</RevitAddIns>

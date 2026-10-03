@@ -1,0 +1,76 @@
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+
+namespace RevitPanelCreator
+{
+    public partial class PanelDialog : Window
+    {
+        private readonly ExternalCommandData _commandData;
+
+        public PanelDialog(ExternalCommandData commandData)
+        {
+            InitializeComponent();
+            _commandData = commandData;
+
+            WidthTextBox.Text = "1200";
+            HeightTextBox.Text = "3000";
+            GapTextBox.Text = "50";
+            RowsTextBox.Text = "3";
+            ColumnsTextBox.Text = "4";
+            StartXTextBox.Text = "0";
+            StartYTextBox.Text = "0";
+        }
+
+        private void CreateButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var settings = new PanelSettings
+                {
+                    PanelWidthMm = ParseDouble(WidthTextBox.Text, "Panel width"),
+                    PanelHeightMm = ParseDouble(HeightTextBox.Text, "Panel height"),
+                    GapMm = ParseDouble(GapTextBox.Text, "Gap"),
+                    Rows = ParseInt(RowsTextBox.Text, "Rows"),
+                    Columns = ParseInt(ColumnsTextBox.Text, "Columns"),
+                    StartXmm = ParseDouble(StartXTextBox.Text, "Start X"),
+                    StartYmm = ParseDouble(StartYTextBox.Text, "Start Y")
+                };
+
+                var document = _commandData.Application.ActiveUIDocument.Document;
+                PanelCreator.CreateGrid(document, settings);
+                DialogResult = true;
+                Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Revit Panel Creator", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private double ParseDouble(string text, string name)
+        {
+            if (double.TryParse(text, NumberStyles.Float, CultureInfo.InvariantCulture, out var value) && value > 0)
+            {
+                return value;
+            }
+
+            throw new InvalidOperationException($"{name} must be a positive number.");
+        }
+
+        private int ParseInt(string text, string name)
+        {
+            if (int.TryParse(text, NumberStyles.Integer, CultureInfo.InvariantCulture, out var value) && value > 0)
+            {
+                return value;
+            }
+
+            throw new InvalidOperationException($"{name} must be a positive integer.");
+        }
+    }
+}
