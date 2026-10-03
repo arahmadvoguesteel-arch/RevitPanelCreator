@@ -1,81 +1,77 @@
 # Revit Panel Creator
 
-A Revit add-in for creating a grid of BIM wall panels from custom dimensions and spacing.
+A professional Revit add-in for Revit 2027 that creates a grid of BIM wall panels from custom dimensions, spacing, and layout.
 
-Features:
-- Create actual Revit wall elements
-- Custom panel width, height, and gap
-- Rows × columns layout
-- Start position in model coordinates
-- Revit 2025-ready project template (compatible with later versions)
+## Features
 
-This project is built as a real add-in that can be installed in Revit using the standard .addin mechanism.
+✅ Create actual Revit wall elements  
+✅ Custom panel dimensions (width, height in millimeters)  
+✅ Gap between panels  
+✅ Rows × columns layout  
+✅ Custom start position in model coordinates  
+✅ Simple dialog-based interface  
+✅ Ideal for facade panel layouts and modular wall systems  
 
-## Project structure
+## What It Does
 
-- `src/RevitPanelCreator/` – main source code
-- `README.md` – this file
-- `.gitignore` – build output exclusions
+The add-in opens a dialog where you enter:
+- Panel width (mm)
+- Panel height (mm)
+- Gap between panels (mm)
+- Number of rows
+- Number of columns
+- Starting X position (mm)
+- Starting Y position (mm)
+
+It then creates actual Revit wall elements arranged in a rectangular grid.
 
 ## Requirements
 
-- Microsoft Visual Studio 2022
-- Revit 2025 installed (or later version with matching API references)
+- Revit 2027
+- Visual Studio 2022
 - .NET 8 SDK for Windows
 
-## Build steps
+## Installation
 
-1. Open the solution in Visual Studio.
-2. Restore NuGet packages if needed.
-3. Build the solution in Release x64.
-4. Copy the generated DLL to a folder you control, for example:
-   `C:\RevitAddins\RevitPanelCreator\`
-5. Update the `.addin` file so the `<Assembly>` path points to your DLL location.
-6. Copy the `.addin` file to the Revit add-ins folder:
-   `C:\ProgramData\Autodesk\Revit\Addins\2025\`
-7. Launch Revit and open the Add-Ins tab.
+See [INSTALLATION_GUIDE.md](INSTALLATION_GUIDE.md) for full setup steps.
 
-## Add-in manifest
+## Build
 
-The manifest file is included in the `src/RevitPanelCreator` folder. Update the assembly path before installing.
+See [BUILD_INSTRUCTIONS.md](BUILD_INSTRUCTIONS.md) for build steps.
 
-Example:
+## Project Structure
 
-```xml
-<AddIn Type="Application">
-  <Name>Revit Panel Creator</Name>
-  <Assembly>C:\RevitAddins\RevitPanelCreator\RevitPanelCreator.dll</Assembly>
-  <AddInId>9A2E601B-31D9-4897-BC18-8E8B2AEF6284</AddInId>
-  <FullClassName>RevitPanelCreator.RevitPanelCreatorApp</FullClassName>
-  <VendorId>RPG</VendorId>
-  <VendorDescription>Revit Panel Creator</VendorDescription>
-</AddIn>
+```text
+RevitPanelCreator/
+├── src/RevitPanelCreator/
+│   ├── RevitPanelCreatorApp.cs
+│   ├── CreatePanelsCommand.cs
+│   ├── PanelDialog.xaml
+│   ├── PanelDialog.xaml.cs
+│   ├── PanelCreator.cs
+│   ├── PanelSettings.cs
+│   ├── RevitPanelCreator.csproj
+│   └── RevitPanelCreator.addin
+├── RevitPanelCreator.sln
+├── README.md
+├── INSTALLATION_GUIDE.md
+├── BUILD_INSTRUCTIONS.md
+└── .gitignore
 ```
 
-## How the tool works
+## Example
 
-The add-in opens a dialog where the user enters:
-- panel width (mm)
-- panel height (mm)
-- gap between panels (mm)
-- rows
-- columns
-- start X (mm)
-- start Y (mm)
+Input values:
+- Panel width: 1200 mm
+- Panel height: 3000 mm
+- Gap: 50 mm
+- Rows: 3
+- Columns: 4
+- Start X: 0 mm
+- Start Y: 0 mm
 
-The tool converts millimeters to Revit internal feet and creates multiple wall elements in a rectangular grid.
+The tool creates a 3×4 grid of wall panels with 50 mm gaps between them.
 
 ## Notes
 
-- This is a beginner-friendly starter project that creates actual Revit wall elements, suitable for custom facade panel layouts.
-- You may want to refine the logic later for family-based panels, controlled offsets, or curved layouts.
-- The default add-in uses a standard wall type selected from the active project.
-
-## Next step ideas
-
-- Add a wall type selector
-- Add start point from the current view origin
-- Add panel naming or parameter assignment
-- Add a custom UI for facade layout patterns
-- Add export/import of panel layouts
-
+This is a real Revit BIM add-in and uses actual Revit wall elements.
